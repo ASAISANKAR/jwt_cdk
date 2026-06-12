@@ -15,8 +15,8 @@ on:
     branches: [ "master" ]
 
 env:
-  USERNAME: ${{secrets.USER_NAME}}
-  PASSWORD: ${{secrets.USER_PASSWORD}}
+  USERNAME: ${{ secrets.USER_NAME }}
+  PASSWORD: ${{ secrets.PASSWORD }}
 
 jobs:
   build:
