@@ -5,14 +5,14 @@ import com.springsecurity_jwt.jwt.Model.Users;
 import com.springsecurity_jwt.jwt.Service.BuildingService;
 import com.springsecurity_jwt.jwt.Service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
 import java.security.Principal;
 import java.util.List;
 
@@ -25,7 +25,12 @@ public class BuildingController {
   @Autowired
   JWTService jwtService;
 
-    @GetMapping("/")
+
+  @Autowired
+  private UserDetailsService userDetailsService;
+
+
+  @GetMapping("/")
     public String buildingHome(){
       return "<h1 align = 'center'>Welcome to Building Home Page</h1>";
     }
@@ -52,6 +57,8 @@ public class BuildingController {
     @GetMapping("/myjwt")
     public String getMyJwtToken(Principal principal)
     {
-      return jwtService.generateToken(principal.getName());
+      UserDetails userDetails =
+          userDetailsService.loadUserByUsername(principal.getName());
+      return jwtService.generateToken(userDetails);
     }
 }
