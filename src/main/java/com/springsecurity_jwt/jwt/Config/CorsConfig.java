@@ -15,7 +15,7 @@ public class CorsConfig {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedOrigins("https://building-ui-51m7.onrender.com","https://grand-scone-06657a.netlify.app/")
+            .allowedOrigins("https://building-ui-51m7.onrender.com","https://grand-scone-06657a.netlify.app/", "localhost:8082")
             .allowedMethods("*")
             .allowedHeaders("*")
             .allowCredentials(true);
