@@ -8,14 +8,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-
+import java.util.List;
 
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
   private String SECRET_KEY="a-string-secret-at-least-256-bits-long";
@@ -41,10 +41,15 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 .getBody();
 
             String username = claims.getSubject();
+            List<String> roles = claims.get("roles", List.class);
+            List<SimpleGrantedAuthority> authorities =
+                roles.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .toList();
+
 
             UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
-
+                new UsernamePasswordAuthenticationToken(username, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(token);
           }
           catch (Exception e)
