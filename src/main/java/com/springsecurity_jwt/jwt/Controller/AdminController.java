@@ -3,6 +3,7 @@ package com.springsecurity_jwt.jwt.Controller;
 import com.springsecurity_jwt.jwt.Model.Users;
 import com.springsecurity_jwt.jwt.Service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,11 @@ public class AdminController {
     public List<Users>  getAllUsers()
     {
         return adminService.getAllUsers();
+    }
+
+    @RequestMapping("/adduser")
+    public Users addUser(@RequestBody Users user){
+        return adminService.addUser(user);
     }
 
 }

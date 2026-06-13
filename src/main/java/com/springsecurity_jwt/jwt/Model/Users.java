@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class Users implements UserDetails {
   private String password;
 
   @ElementCollection(fetch = FetchType.EAGER)
-  private List<String> roles;
+  private List<String> roles = new ArrayList<>(List.of("ROLE_USER"));
 
   public List<String> getRoles() {
     return roles;
