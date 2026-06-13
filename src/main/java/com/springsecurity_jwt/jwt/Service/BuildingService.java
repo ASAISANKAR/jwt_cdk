@@ -20,4 +20,13 @@ public class BuildingService {
   public Building addBuilding(Building building) {
     return buildingRepo.save(building);
   }
+
+  public String deleteBuilding(int id) {
+    if (!buildingRepo.existsById(id)) {
+      return "Building not found";
+    }
+    buildingRepo.deleteById(id);
+    return "Deleted successfully";
+
+  }
 }

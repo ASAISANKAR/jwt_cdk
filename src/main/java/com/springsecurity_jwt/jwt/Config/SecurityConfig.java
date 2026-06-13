@@ -22,7 +22,7 @@ public class SecurityConfig {
     return http
         .authorizeHttpRequests(request -> request
             .requestMatchers("/").permitAll()
-            .requestMatchers("/addBuilding","/admin/**").hasAuthority("ROLE_ADMIN")
+            .requestMatchers("/building","/admin/**").hasAuthority("ROLE_ADMIN")
             .anyRequest().authenticated())
         .formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults())

@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -45,13 +42,19 @@ public class BuildingController {
       return csrfToken;
     }
 
-    @PostMapping("/addBuilding")
+    @PostMapping("/building")
     public String addBuilding(@RequestBody Building building){
       Building buildingResponse = buildingService.addBuilding(building);
       if(buildingResponse.equals(building))
         return "Building added successfully";
       else
         return "Failed to add building";
+    }
+
+    @DeleteMapping("/building/{id}")
+    public String deleteBuilding(@PathVariable int id)
+    {
+       return buildingService.deleteBuilding(id);
     }
 
     @GetMapping("/myjwt")
