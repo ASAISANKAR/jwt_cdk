@@ -10,6 +10,15 @@ public class Floor{
   private int id;
   private int floorNo;
   private String companyname;
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
   @ManyToOne
   @JoinColumn(name = "building_id")
   private Building building;
