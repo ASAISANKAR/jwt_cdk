@@ -38,7 +38,12 @@ public class SecurityConfig {
             })
             )
         .formLogin(Customizer.withDefaults())
-        .httpBasic(Customizer.withDefaults())
+        .httpBasic(httpBasic -> httpBasic
+                .authenticationEntryPoint((request, response, authException) -> {
+                  response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                  response.getWriter().write("Unauthorized");
+                })
+        )
         .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
         .build();
   }
