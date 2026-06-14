@@ -55,6 +55,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
           catch (Exception e)
           {
             System.out.println("Invalid JWT: " + e.getMessage());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write(
                 "{\"error\": \"Invalid JWT\", \"message\": \"" + e.getMessage() + "\"}"
             );
