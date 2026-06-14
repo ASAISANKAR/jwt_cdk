@@ -26,7 +26,7 @@ public class SecurityConfig {
             .requestMatchers("/").permitAll()
             .requestMatchers(HttpMethod.POST, "/building")
             .hasAuthority("ROLE_ADMIN")
-            .requestMatchers(HttpMethod.DELETE,"/building")
+            .requestMatchers(HttpMethod.DELETE,"/building/**")
             .hasAuthority("ROLE_ADMIN")
             .requestMatchers("/admin/**")
             .hasAuthority("ROLE_ADMIN")
