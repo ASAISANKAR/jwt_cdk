@@ -1,5 +1,6 @@
 package com.springsecurity_jwt.jwt.Config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -28,6 +29,14 @@ public class SecurityConfig {
             .requestMatchers("/admin/**")
             .hasAuthority("ROLE_ADMIN")
             .anyRequest().authenticated())
+            .exceptionHandling(exception -> exception
+            .authenticationEntryPoint((request, response, authException) -> {
+              response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+            })
+            .accessDeniedHandler((request, response, accessDeniedException) -> {
+              response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+            })
+            )
         .formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults())
         .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
